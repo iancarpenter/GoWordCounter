@@ -13,9 +13,11 @@ func main() {
 	file := openFile()
 	defer file.Close()
 
-	countWords(file)
+	wordCount := countWords(file)
 
+	fmt.Printf("Number of words: %d\n", wordCount)
 	fmt.Printf("Time taken: %v", time.Since(start))
+
 }
 
 func openFile() *os.File {
@@ -28,12 +30,12 @@ func openFile() *os.File {
 	return file
 }
 
-func countWords(file *os.File) {
+func countWords(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanWords)
 	count := 0
 	for scanner.Scan() {
 		count++
 	}
-	fmt.Printf("Number of words: %d\n", count)
+	return count
 }

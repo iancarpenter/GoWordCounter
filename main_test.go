@@ -41,8 +41,8 @@ func TestOpenFile(t *testing.T) {
 }
 
 func TestCountWords(t *testing.T) {
-	// Test case: File with words
-	t.Run("File with words", func(t *testing.T) {
+	// Test case: File with multiple words
+	t.Run("Multiple words", func(t *testing.T) {
 		content := "Hello world this is a test"
 		tmpFile, err := os.CreateTemp("", "test.txt")
 		if err != nil {
@@ -53,11 +53,13 @@ func TestCountWords(t *testing.T) {
 		if _, err := tmpFile.WriteString(content); err != nil {
 			t.Fatalf("Failed to write to temp file: %v", err)
 		}
-		if _, err := tmpFile.Seek(0, 0); err != nil {
-			t.Fatalf("Failed to seek to beginning of temp file: %v", err)
-		}
+		tmpFile.Seek(0, 0)
 
-		countWords(tmpFile)
+		wordCount := countWords(tmpFile)
+		expectedCount := 6
+		if wordCount != expectedCount {
+			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
+		}
 	})
 
 	// Test case: Empty file
@@ -68,12 +70,16 @@ func TestCountWords(t *testing.T) {
 		}
 		defer os.Remove(tmpFile.Name())
 
-		countWords(tmpFile)
+		wordCount := countWords(tmpFile)
+		expectedCount := 0
+		if wordCount != expectedCount {
+			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
+		}
 	})
 
-	// Test case: File with multiple spaces
-	t.Run("File with multiple spaces", func(t *testing.T) {
-		content := "Hello   world   this  is  a  test"
+	// Test case: File with one word
+	t.Run("One word", func(t *testing.T) {
+		content := "Hello"
 		tmpFile, err := os.CreateTemp("", "test.txt")
 		if err != nil {
 			t.Fatalf("Failed to create temp file: %v", err)
@@ -83,16 +89,18 @@ func TestCountWords(t *testing.T) {
 		if _, err := tmpFile.WriteString(content); err != nil {
 			t.Fatalf("Failed to write to temp file: %v", err)
 		}
-		if _, err := tmpFile.Seek(0, 0); err != nil {
-			t.Fatalf("Failed to seek to beginning of temp file: %v", err)
-		}
+		tmpFile.Seek(0, 0)
 
-		countWords(tmpFile)
+		wordCount := countWords(tmpFile)
+		expectedCount := 1
+		if wordCount != expectedCount {
+			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
+		}
 	})
 
-	// Test case: File with newlines
-	t.Run("File with newlines", func(t *testing.T) {
-		content := "Hello\nworld\nthis\nis\na\ntest"
+	// Test case: File with multiple lines
+	t.Run("Multiple lines", func(t *testing.T) {
+		content := "Hello world\nthis is a test"
 		tmpFile, err := os.CreateTemp("", "test.txt")
 		if err != nil {
 			t.Fatalf("Failed to create temp file: %v", err)
@@ -102,10 +110,12 @@ func TestCountWords(t *testing.T) {
 		if _, err := tmpFile.WriteString(content); err != nil {
 			t.Fatalf("Failed to write to temp file: %v", err)
 		}
-		if _, err := tmpFile.Seek(0, 0); err != nil {
-			t.Fatalf("Failed to seek to beginning of temp file: %v", err)
-		}
+		tmpFile.Seek(0, 0)
 
-		countWords(tmpFile)
+		wordCount := countWords(tmpFile)
+		expectedCount := 6
+		if wordCount != expectedCount {
+			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
+		}
 	})
 }
