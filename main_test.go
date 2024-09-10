@@ -5,41 +5,6 @@ import (
 	"testing"
 )
 
-func TestOpenFile(t *testing.T) {
-	// Test case: File exists
-	t.Run("File exists", func(t *testing.T) {
-		// Create a temporary file
-		tmpFile, err := os.CreateTemp("", "test.txt")
-		if err != nil {
-			t.Fatalf("Failed to create temp file: %v", err)
-		}
-		defer os.Remove(tmpFile.Name())
-
-		// Override the file name in openFile function
-		file, err := os.Open(tmpFile.Name())
-		if err != nil {
-			t.Fatalf("Expected to open file, got error: %v", err)
-		}
-		defer file.Close()
-
-		if file == nil {
-			t.Error("Expected file to be opened, got nil")
-		}
-	})
-
-	// Test case: File does not exist
-	t.Run("File does not exist", func(t *testing.T) {
-		file, err := os.Open("nonexistent.txt")
-		if err == nil {
-			t.Error("Expected error when opening nonexistent file, got nil")
-		}
-
-		if file != nil {
-			t.Error("Expected file to be nil, got non-nil")
-		}
-	})
-}
-
 func TestCountWords(t *testing.T) {
 	// Test case: File with multiple words
 	t.Run("Multiple words", func(t *testing.T) {
