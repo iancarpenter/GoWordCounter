@@ -32,4 +32,9 @@ This is a simple Go program that counts the number of words in a file named `tes
 
 ### Example
 
-If `test.txt` contains:
+If test.txt contains: Hello world
+
+The output will be:
+
+Number of words: 2 
+Time taken: 123.456µs
