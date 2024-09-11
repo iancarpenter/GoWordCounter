@@ -20,7 +20,10 @@ func TestCountWords(t *testing.T) {
 		}
 		tmpFile.Seek(0, 0)
 
-		wordCount := countWords(tmpFile)
+		wordCount, err := countWords(tmpFile)
+		if err != nil {
+			t.Fatalf("Failed to count words: %v", err)
+		}
 		expectedCount := 6
 		if wordCount != expectedCount {
 			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
@@ -35,7 +38,10 @@ func TestCountWords(t *testing.T) {
 		}
 		defer os.Remove(tmpFile.Name())
 
-		wordCount := countWords(tmpFile)
+		wordCount, err := countWords(tmpFile)
+		if err != nil {
+			t.Fatalf("Failed to count words: %v", err)
+		}
 		expectedCount := 0
 		if wordCount != expectedCount {
 			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
@@ -56,7 +62,10 @@ func TestCountWords(t *testing.T) {
 		}
 		tmpFile.Seek(0, 0)
 
-		wordCount := countWords(tmpFile)
+		wordCount, err := countWords(tmpFile)
+		if err != nil {
+			t.Fatalf("Failed to count words: %v", err)
+		}
 		expectedCount := 1
 		if wordCount != expectedCount {
 			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
@@ -77,7 +86,10 @@ func TestCountWords(t *testing.T) {
 		}
 		tmpFile.Seek(0, 0)
 
-		wordCount := countWords(tmpFile)
+		wordCount, err := countWords(tmpFile)
+		if err != nil {
+			t.Fatalf("Failed to count words: %v", err)
+		}
 		expectedCount := 6
 		if wordCount != expectedCount {
 			t.Errorf("Expected %d words, got %d", expectedCount, wordCount)
